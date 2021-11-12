@@ -1,4 +1,4 @@
-  /* Dyode Cart Drawer Styles */
+  /*  Cart Drawer Styles */
   :root {
     --cart-side-padding: 40px;
     --cart-side-padding-mobile: 25px;
@@ -37,7 +37,7 @@
     position: fixed;
     right:-200vw;
   }
-  
+
   .cart-drawer__relative-wrapper{
     position:relative;
   }

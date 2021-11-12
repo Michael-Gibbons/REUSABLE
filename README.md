@@ -1,4 +1,4 @@
-# DYODE REUSEABLE COMPONENTS
+# MY REUSEABLE COMPONENTS
 
 This is a repository dedicated for reusable code. The code structure is as follows:
 
