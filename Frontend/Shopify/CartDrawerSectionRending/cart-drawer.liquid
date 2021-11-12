@@ -1,0 +1,108 @@
+<div id="cart-drawer" class="cart-drawer" data-cart-drawer>
+  <div class="cart-drawer__relative-wrapper">
+    <div class="cart-drawer__inner">
+      <div>
+        <div class="cart-drawer__header">
+          <div class="cart-drawer__title">My Cart</div>
+          <div class="cart-drawer__close" data-cart-drawer-close>&#10006;</div>
+        </div>
+        {% if cart.items.size > 0 %}
+          <div class="cart-drawer__line-items">
+            {% for item in cart.items %}
+            <div class="cart-drawer__line-item">
+              <div class="cart-drawer__line-item-image">
+                <img src="{{item.image | img_url: '200x200'}}" alt="{{item.alt}}"/>
+              </div>
+              <div class="cart-drawer__line-item-content">
+                <div class="cart-drawer__line-item-info">
+                  <div class="cart-drawer__line-item-title">{{item.title}}</div>
+                  <div class="cart-drawer__line-item-price">
+                    <span class="cart-drawer__line-item-final-price {% if item.product.compare_at_price > item.final_price %}cart-drawer__line-item-final-price--compare{% endif %}">{{item.final_price | money}}</span>
+                    {% if item.product.compare_at_price > item.final_price %}
+                      <span class="cart-drawer__line-item-compare-at-price">{{ item.product.compare_at_price | money }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="cart-drawer__line-item-actions">
+                  <div class="cart-drawer__line-item-qty-adjust">
+                    <button data-cart-drawer-line-item-qty-adjust="{{item.quantity | minus: 1}}" data-id="{{item.id}}" data-line="{{forloop.index}}"> 	&#8722; </button>
+                    <span>{{item.quantity}}</span>
+                    <button data-cart-drawer-line-item-qty-adjust="{{item.quantity | plus: 1}}" data-id="{{item.id}}" data-line="{{forloop.index}}"> &#x2B; </button>
+                  </div>
+                  <div class="cart-drawer__line-item-remove" data-cart-drawer-line-item-remove data-id="{{item.id}}" data-line="{{forloop.index}}">Remove</div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="cart-drawer__addons" data-cart-drawer-addons>
+            <div data-rebuy-id="18246"></div>
+          </div>
+      </div>
+      <div class="cart-drawer__footer">
+        <div class="cart-drawer__data-line">
+          <div class="cart-drawer__data-line-title"> Subtotal </div>
+          <div class="cart-drawer__subtotal"> {{ cart.total_price | money}} </div>
+        </div>
+        <div class="cart-drawer__checkout">
+          <a href="/checkout"><button>Checkout</button></a>
+        </div>
+        <div class="cart-drawer__footer-note">
+          Shipping and taxes calculated at checkout
+        </div>
+      </div>
+      {% else %}
+        <div class="cart-drawer__empty-state">
+          <div class="cart-drawer__empty-state-title">Cart is currently empty!</div>
+          <div class="cart-drawer__empty-state-collections">
+            {% for block in section.blocks %}
+              <div class="cart-drawer__empty-state-collection">
+                <a href="{{block.settings.empty_state_collection}}">
+                  <img class="cart-drawer__empty-state-collection-image" src="{{ block.settings.empty_state_collection_image | img_url: '200x200' }}" />
+                  <div class="cart-drawer__empty-state-collection-title">{{block.settings.empty_state_collection_title}}</div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Cart Drawer",
+    "settings": [],
+    "max_blocks": 6,
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Empty Cart Collection URL",
+        "settings": [
+          {
+            "id": "empty_state_collection",
+            "type": "url",
+            "label": "Collection URL"
+          },
+          {
+            "id": "empty_state_collection_image",
+            "type": "image_picker",
+            "label": "Collection Image"
+          },
+          {
+            "id": "empty_state_collection_title",
+            "type": "text",
+            "label": "Empty Cart Collection Label"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+      "name": "Cart Drawer",
+      "category": "Cart Drawer"
+      }
+    ]
+  }
+{% endschema %}
